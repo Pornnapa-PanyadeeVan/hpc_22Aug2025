@@ -1,0 +1,29 @@
+# Core LangChain libraries
+langchain
+langchain_community
+langchain_core
+langchain-huggingface
+huggingface_hub
+
+# Vector Store
+faiss-cpu
+
+# Embedding model library
+sentence-transformers
+
+# Document Loaders
+pypdf
+unstructured
+python-docx
+
+# Hugging Face LLM libraries
+torch
+transformers
+accelerate
+bitsandbytes
+einops
+tiktoken
+
+# Pinned dependencies to prevent conflicts
+numpy
+markupsafe
