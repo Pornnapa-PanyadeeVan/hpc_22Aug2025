@@ -177,7 +177,7 @@ def load_llm_and_tokenizer():
     print(f"⏳ Loading LLM and Tokenizer: {LLM_MODEL}...")
     model = AutoModelForCausalLM.from_pretrained(
         LLM_MODEL,
-        torch_dtype="auto",
+        torch_dtype=torch.float16,
         device_map="auto"
     )
     tokenizer = AutoTokenizer.from_pretrained(LLM_MODEL)
