@@ -28,15 +28,15 @@ DATA_PATH = "data/"
 PROCESSED_PATH = "processed_texts/" # Cache for processed text
 DB_FAISS_PATH = "vectorstore/db_faiss"
 EMBEDDING_MODEL = 'intfloat/multilingual-e5-large'
-LLM_MODEL = "Qwen/Qwen1.5-7B-Chat"
+LLM_MODEL = "Qwen/Qwen2-1.5B-Instruct"
 SUPPORTED_EXTENSIONS = ['.pdf', '.txt', '.doc', '.docx']
 
 # --- Tokenization Parameters ---
-CHUNK_SIZE = 1000
-CHUNK_OVERLAP = 200
+CHUNK_SIZE = 512
+CHUNK_OVERLAP = 100
 
 # k for retriever
-RETRIEVER_K = 5  # Number of documents to retrieve for each query
+RETRIEVER_K = 10  # Number of documents to retrieve for each query
 
 
 # ==============================================================================
@@ -177,7 +177,7 @@ def load_llm_and_tokenizer():
     print(f"⏳ Loading LLM and Tokenizer: {LLM_MODEL}...")
     model = AutoModelForCausalLM.from_pretrained(
         LLM_MODEL,
-        torch_dtype=torch.bfloat16,
+        torch_dtype="auto",
         device_map="auto"
     )
     tokenizer = AutoTokenizer.from_pretrained(LLM_MODEL)
@@ -277,7 +277,7 @@ def main():
             model_inputs = tokenizer([prompt_text], return_tensors="pt").to(model.device)
 
             generated_ids = model.generate(
-                model_inputs.input_ids,
+                **model_inputs,
                 max_new_tokens=1024
             )
             
